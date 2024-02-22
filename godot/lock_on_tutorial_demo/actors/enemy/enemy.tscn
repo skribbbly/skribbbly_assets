@@ -1,0 +1,105 @@
+[gd_scene load_steps=10 format=3 uid="uid://83ut67jjn50c"]
+
+[ext_resource type="Script" path="res://actors/enemy/enemy.gd" id="1_2ko1u"]
+[ext_resource type="PackedScene" uid="uid://6mlq1rlsucdb" path="res://assets/gltf/robot/robot.gltf" id="1_06dg1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nj6fq"]
+albedo_color = Color(0.682353, 0.235294, 0.235294, 1)
+roughness = 0.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mqpto"]
+roughness = 0.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hvmhr"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2iian"]
+albedo_color = Color(0.137255, 0.0352941, 0.0352941, 1)
+roughness = 0.19
+refraction_enabled = true
+refraction_scale = 1.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_xi60t"]
+radius = 1.2
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_axx7a"]
+radius = 0.344121
+height = 1.07557
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_k2j6v"]
+radius = 0.261368
+height = 0.88768
+
+[node name="Enemy" type="CharacterBody3D"]
+script = ExtResource("1_2ko1u")
+
+[node name="robot" parent="." instance=ExtResource("1_06dg1")]
+
+[node name="Skeleton3D" parent="robot/TutorBot" index="0"]
+bones/0/rotation = Quaternion(-2.98023e-08, 1.19209e-07, -2.11758e-22, 1)
+bones/3/rotation = Quaternion(0.00836305, -0.00135372, 0.987116, 0.159784)
+bones/3/scale = Vector3(1, 1, 1)
+bones/4/rotation = Quaternion(-0.036469, -1.85459e-07, 0.000617974, 0.999335)
+bones/6/rotation = Quaternion(-0.00836304, -0.00135373, 0.987116, -0.159784)
+bones/6/scale = Vector3(1, 1, 1)
+bones/7/rotation = Quaternion(-0.036469, 1.85431e-07, -0.000617945, 0.999335)
+bones/8/rotation = Quaternion(0.707107, -5.0243e-15, -0.707107, 7.48679e-22)
+bones/10/scale = Vector3(1, 1, 1)
+bones/11/rotation = Quaternion(1.21891e-07, 3.19157e-09, -0.613646, 0.789581)
+bones/12/scale = Vector3(1, 1, 1)
+bones/13/rotation = Quaternion(-0.0139272, 0.999903, 2.9223e-08, 7.54789e-08)
+bones/14/rotation = Quaternion(2.69524e-08, -4.3012e-08, -0.0087048, 0.999962)
+bones/14/scale = Vector3(1, 1, 1)
+bones/15/rotation = Quaternion(1.21891e-07, -3.19156e-09, 0.613646, 0.789581)
+bones/15/scale = Vector3(1, 1, 1)
+bones/16/scale = Vector3(1, 1, 1)
+bones/17/rotation = Quaternion(0.519345, 0.479877, -0.519344, -0.479876)
+bones/18/rotation = Quaternion(2.0146e-07, 5.71659e-08, -0.734464, 0.678648)
+bones/19/rotation = Quaternion(-2.12759e-07, -5.97949e-08, 0.803264, 0.595623)
+bones/20/scale = Vector3(1, 1, 1)
+bones/21/rotation = Quaternion(0.519344, -0.479876, 0.519344, -0.479877)
+bones/22/rotation = Quaternion(2.04604e-07, -5.37635e-08, 0.734464, 0.678648)
+bones/23/rotation = Quaternion(-2.08876e-07, 5.42224e-08, -0.803264, 0.595623)
+bones/23/scale = Vector3(1, 1, 1)
+bones/24/rotation = Quaternion(-0.00836332, -0.00135373, 0.987116, -0.159784)
+bones/24/scale = Vector3(1, 1, 1)
+
+[node name="TutorBotMesh" parent="robot/TutorBot/Skeleton3D" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_nj6fq")
+surface_material_override/1 = SubResource("StandardMaterial3D_mqpto")
+surface_material_override/2 = SubResource("StandardMaterial3D_hvmhr")
+surface_material_override/3 = SubResource("StandardMaterial3D_2iian")
+
+[node name="BoneAttachment3D" type="BoneAttachment3D" parent="robot/TutorBot/Skeleton3D" index="1"]
+transform = Transform3D(1, 1.65306e-08, -1.65306e-08, -1.65306e-08, 1, 6.7022e-08, 1.65306e-08, -6.7022e-08, 1, 2.98595e-09, 0.623276, -3.849e-08)
+bone_name = "head"
+bone_idx = 5
+
+[node name="Marker3D" type="Marker3D" parent="robot/TutorBot/Skeleton3D/BoneAttachment3D"]
+transform = Transform3D(1, 4.22116e-15, -3.55271e-15, 6.68443e-16, 1, -7.10543e-15, 0, 7.10543e-15, 1, 1.77636e-15, 0.258202, 3.55271e-15)
+
+[node name="AnimationPlayer" parent="robot" index="12"]
+autoplay = "idle"
+
+[node name="FarTargetDetection" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+collision_layer = 512
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FarTargetDetection"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0516362, 0)
+shape = SubResource("SphereShape3D_xi60t")
+
+[node name="NearTargetDetection" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+collision_layer = 512
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NearTargetDetection"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.045, 0.017)
+shape = SubResource("CapsuleShape3D_axx7a")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.445, 0.017)
+shape = SubResource("CapsuleShape3D_k2j6v")
+
+[editable path="robot"]

@@ -1,0 +1,43 @@
+[gd_scene load_steps=5 format=3 uid="uid://dvimfwhukkm3v"]
+
+[ext_resource type="PackedScene" uid="uid://kv4dwkxm762a" path="res://assets/tutorbot/tutorbot.gltf" id="1_0pu6x"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qvnf4"]
+albedo_color = Color(0.682353, 0.235294, 0.235294, 1)
+roughness = 0.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ioivh"]
+roughness = 0.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3w7v5"]
+albedo_color = Color(0.137255, 0.0352941, 0.0352941, 1)
+roughness = 0.15
+
+[node name="BadBot" type="CharacterBody3D"]
+
+[node name="Mesh" type="Node3D" parent="."]
+
+[node name="tutorbot" parent="Mesh" instance=ExtResource("1_0pu6x")]
+
+[node name="Skeleton3D" parent="Mesh/tutorbot/TutorBot" index="0"]
+bones/3/rotation = Quaternion(0.00836305, -0.00135372, 0.987116, 0.159784)
+bones/4/rotation = Quaternion(-0.036469, -1.85459e-07, 0.000617974, 0.999335)
+bones/6/rotation = Quaternion(-0.00836304, -0.00135373, 0.987116, -0.159784)
+bones/7/rotation = Quaternion(-0.036469, 1.85431e-07, -0.000617945, 0.999335)
+bones/8/rotation = Quaternion(0.707107, -5.0243e-15, -0.707107, 7.48679e-22)
+bones/11/rotation = Quaternion(1.21891e-07, 3.19157e-09, -0.613646, 0.789581)
+bones/13/rotation = Quaternion(-0.0139272, 0.999903, 2.9223e-08, 7.54789e-08)
+bones/14/rotation = Quaternion(2.69524e-08, -4.3012e-08, -0.0087048, 0.999962)
+bones/15/rotation = Quaternion(1.21891e-07, -3.19156e-09, 0.613646, 0.789581)
+bones/17/rotation = Quaternion(0.519345, 0.479877, -0.519344, -0.479876)
+bones/18/rotation = Quaternion(2.0146e-07, 5.71659e-08, -0.734464, 0.678648)
+bones/21/rotation = Quaternion(0.519344, -0.479876, 0.519344, -0.479877)
+bones/22/rotation = Quaternion(2.04604e-07, -5.37635e-08, 0.734464, 0.678648)
+bones/24/rotation = Quaternion(-0.00836332, -0.00135373, 0.987116, -0.159784)
+
+[node name="TutorBotMesh" parent="Mesh/tutorbot/TutorBot/Skeleton3D" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_qvnf4")
+surface_material_override/1 = SubResource("StandardMaterial3D_ioivh")
+surface_material_override/3 = SubResource("StandardMaterial3D_3w7v5")
+
+[editable path="Mesh/tutorbot"]
