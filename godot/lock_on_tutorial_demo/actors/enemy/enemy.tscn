@@ -45,7 +45,6 @@ bones/7/rotation = Quaternion(-0.036469, 1.85431e-07, -0.000617945, 0.999335)
 bones/8/rotation = Quaternion(0.707107, -5.0243e-15, -0.707107, 7.48679e-22)
 bones/10/scale = Vector3(1, 1, 1)
 bones/11/rotation = Quaternion(1.21891e-07, 3.19157e-09, -0.613646, 0.789581)
-bones/12/scale = Vector3(1, 1, 1)
 bones/13/rotation = Quaternion(-0.0139272, 0.999903, 2.9223e-08, 7.54789e-08)
 bones/14/rotation = Quaternion(2.69524e-08, -4.3012e-08, -0.0087048, 0.999962)
 bones/14/scale = Vector3(1, 1, 1)
@@ -70,7 +69,7 @@ surface_material_override/2 = SubResource("StandardMaterial3D_hvmhr")
 surface_material_override/3 = SubResource("StandardMaterial3D_2iian")
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="robot/TutorBot/Skeleton3D" index="1"]
-transform = Transform3D(1, 1.65306e-08, -1.65306e-08, -1.65306e-08, 1, 6.7022e-08, 1.65306e-08, -6.7022e-08, 1, 2.98595e-09, 0.623276, -3.849e-08)
+transform = Transform3D(1, 1.65306e-08, -1.65312e-08, -1.65306e-08, 1, 6.70219e-08, 1.65312e-08, -6.70219e-08, 1, 2.98595e-09, 0.623276, -3.84899e-08)
 bone_name = "head"
 bone_idx = 5
 

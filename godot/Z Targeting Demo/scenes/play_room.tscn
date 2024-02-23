@@ -1,9 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://bybblm8tpl7rf"]
+[gd_scene load_steps=10 format=3 uid="uid://bybblm8tpl7rf"]
 
 [ext_resource type="Texture2D" uid="uid://6kyt456tmgfa" path="res://assets/kenny/PNG/Dark/texture_09.png" id="1_kt235"]
 [ext_resource type="Texture2D" uid="uid://biehgs6kdiryj" path="res://assets/kenny/PNG/Light/texture_08.png" id="2_iuiyy"]
-[ext_resource type="PackedScene" uid="uid://bdyqboxekyt0i" path="res://actors/player/player.tscn" id="3_jakjs"]
 [ext_resource type="PackedScene" uid="uid://dvimfwhukkm3v" path="res://actors/badbot/bad_bot.tscn" id="4_fmwrx"]
+[ext_resource type="PackedScene" uid="uid://bnx6442a86fjx" path="res://actors/player/player_container.tscn" id="4_rnjle"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_inkov"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -32,6 +32,9 @@ roughness = 0.8
 roughness_texture = ExtResource("2_iuiyy")
 uv1_triplanar = true
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_jktwh"]
+radius = 1.5
+
 [node name="PlayRoom" type="Node3D"]
 
 [node name="Background" type="Node" parent="."]
@@ -51,9 +54,39 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.6, 0)
 size = Vector3(32, 5.2, 32)
 material = SubResource("StandardMaterial3D_cnnsk")
 
-[node name="TutorBot" parent="." instance=ExtResource("3_jakjs")]
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 2.5, 0)
+size = Vector3(5, 5.2, 32)
+material = SubResource("StandardMaterial3D_cnnsk")
 
 [node name="NPCs" type="Node" parent="."]
 
 [node name="BadBot" parent="NPCs" instance=ExtResource("4_fmwrx")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -6)
+
+[node name="BadBot2" parent="NPCs" instance=ExtResource("4_fmwrx")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1, 0, -3)
+
+[node name="CollisionShape3D" parent="NPCs/BadBot2/TargetableArea" index="0"]
+shape = SubResource("SphereShape3D_jktwh")
+
+[node name="PlayerContainer" parent="." instance=ExtResource("4_rnjle")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="TutorBot" parent="PlayerContainer" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="FreeCam" parent="PlayerContainer" index="1"]
+transform = Transform3D(0.999734, 0, 7.45058e-08, 0, 1, 0, -7.45058e-08, 0, 0.999734, 1.2666e-07, 0.682278, 1.69955)
+
+[node name="BattleCam" parent="PlayerContainer" index="2"]
+transform = Transform3D(0.999734, 0, 7.45058e-08, 0, 1, 0, -7.45058e-08, 0, 0.999734, 1.49012e-07, 1.08228, 1.99947)
+
+[node name="Camera3D" parent="PlayerContainer" index="3"]
+transform = Transform3D(0.999734, 0, 7.45058e-08, 0, 1, 0, -7.45058e-08, 0, 0.999734, 1.49012e-07, 1.08228, 1.99947)
+
+[editable path="NPCs/BadBot2"]
+[editable path="NPCs/BadBot2/Mesh/tutorbot"]
+[editable path="PlayerContainer"]
+[editable path="PlayerContainer/TutorBot"]
+[editable path="PlayerContainer/TutorBot/Mesh/tutorbot"]

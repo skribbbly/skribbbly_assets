@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://dvimfwhukkm3v"]
+[gd_scene load_steps=9 format=3 uid="uid://dvimfwhukkm3v"]
 
 [ext_resource type="PackedScene" uid="uid://kv4dwkxm762a" path="res://assets/tutorbot/tutorbot.gltf" id="1_0pu6x"]
+[ext_resource type="Script" path="res://actors/badbot/bad_bot.gd" id="1_t1bw6"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qvnf4"]
 albedo_color = Color(0.682353, 0.235294, 0.235294, 1)
@@ -13,7 +14,21 @@ roughness = 0.5
 albedo_color = Color(0.137255, 0.0352941, 0.0352941, 1)
 roughness = 0.15
 
-[node name="BadBot" type="CharacterBody3D"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_h6xgb"]
+radius = 0.181893
+height = 0.87065
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_r7q0m"]
+radius = 0.9
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jtewn"]
+radius = 0.3
+height = 1.2
+
+[node name="BadBot" type="CharacterBody3D" groups=["Targetable"]]
+collision_layer = 4
+collision_mask = 5
+script = ExtResource("1_t1bw6")
 
 [node name="Mesh" type="Node3D" parent="."]
 
@@ -39,5 +54,33 @@ bones/24/rotation = Quaternion(-0.00836332, -0.00135373, 0.987116, -0.159784)
 surface_material_override/0 = SubResource("StandardMaterial3D_qvnf4")
 surface_material_override/1 = SubResource("StandardMaterial3D_ioivh")
 surface_material_override/3 = SubResource("StandardMaterial3D_3w7v5")
+
+[node name="BoneAttachment3D" type="BoneAttachment3D" parent="Mesh/tutorbot/TutorBot/Skeleton3D" index="1"]
+transform = Transform3D(1, 1.65306e-08, -1.65306e-08, -1.65306e-08, 1, 6.7022e-08, 1.65306e-08, -6.7022e-08, 1, 2.98595e-09, 0.623276, -3.849e-08)
+bone_name = "head"
+bone_idx = 5
+
+[node name="HeadMarker" type="Marker3D" parent="Mesh/tutorbot/TutorBot/Skeleton3D/BoneAttachment3D"]
+transform = Transform3D(1, 5.99751e-15, -5.32907e-15, 6.68443e-16, 1, -2.13163e-14, 0, 2.13163e-14, 1, -3.30613e-09, 0.2, 1.34044e-08)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.435351, 0)
+shape = SubResource("CapsuleShape3D_h6xgb")
+
+[node name="TargetableArea" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.447517, 0)
+collision_layer = 512
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TargetableArea"]
+shape = SubResource("SphereShape3D_r7q0m")
+
+[node name="TargetableAreaNear" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.447517, 0)
+collision_layer = 512
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TargetableAreaNear"]
+shape = SubResource("CapsuleShape3D_jtewn")
 
 [editable path="Mesh/tutorbot"]
