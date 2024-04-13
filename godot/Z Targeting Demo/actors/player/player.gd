@@ -41,6 +41,8 @@ var sprintable = false
 var ground_snap : bool
 var targetable_object := false
 var sprinting := false
+var jumping := false
+var grounded := true
 # ---- Vector3 ----
 var direction : Vector3 = Vector3()
 var gravity_vec : Vector3 = Vector3()
@@ -49,10 +51,16 @@ var input_vector : Vector2
 # ---- Animation ----
 var anim_blend : float = 0
 
+var ground_type : String =  "ground"
 
 var target 
 
 var target_state = FREE
+
+var bcam_offset_blend := 0.0
+
+signal targeting
+
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -61,7 +69,8 @@ func _ready() -> void:
 	speed = walk_speed
 	friction = walk_friction
 	mesh.top_level = true
-
+	if not is_on_floor():
+		grounded = false
 
 
 func _input(event):
@@ -127,8 +136,10 @@ func _physics_process(delta) -> void:
 		TARGETING:
 			if target != null:
 				bcam.set_priority(2)
+				targeting.emit()
 				look_at(Vector3(target.global_position.x, global_position.y, target.global_position.z))
 				if Input.is_action_just_pressed("mid_click"):
+					target = null
 					target_state = FREE
 			else:
 				target_state = FREE
@@ -143,13 +154,20 @@ func _physics_process(delta) -> void:
 	input_vector.y = Input.get_action_strength("down") - Input.get_action_strength("up")
 	direction = Vector3(input_vector.x, 0, input_vector.y).rotated(Vector3.UP, h_rot).normalized()
 	
+	
 	if input_vector != Vector2.ZERO:
+		if input_vector.x != 0:
+			bcam_offset_blend = 0.3 * -input_vector.x
 		sprintable = true
 		if anim_blend < 1: anim_blend += 0.1
 		anim.set("parameters/Blend2/blend_amount", anim_blend)
 		move_vec = move_vec.lerp(direction * speed, accel * delta)
 		if Input.is_action_just_pressed("shift"):
 			sprinting = not sprinting
+		if is_on_floor():
+			$RunParticals.emitting = true
+		else:
+			$RunParticals.emitting = false
 	else:
 		if anim_blend != 0: 
 			anim_blend -= 0.1
@@ -159,20 +177,44 @@ func _physics_process(delta) -> void:
 			sprinttimer.start()
 			sprintable = false
 		move_vec = move_vec.lerp(Vector3.ZERO, friction * delta)
-	
+		$RunParticals.emitting = false
 	if not is_on_floor():
+		grounded = false
+		anim.set("parameters/LandBlend/blend_amount", 0)
 		gravity_vec.y -= 9.8 * delta
+		anim.set("parameters/GroundTransition/transition_request", "Air")
 	else:
+		if grounded == false:
+			anim.set("parameters/LandingShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+			grounded = true
 		gravity_vec = Vector3.ZERO
 	
+	
+	if is_on_floor() and Input.is_action_just_pressed("ui_accept"):
+		jumping = true
+		anim.set("parameters/JumpShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+	
+	if Input.is_action_just_released("ui_accept") && velocity.y > 0:
+		pass
+	
 	velocity = move_vec + gravity_vec
+	
+	anim.set("parameters/AirVelocityBlend/blend_position", -velocity.y)
 	
 	if velocity == Vector3.ZERO:
 		friction = walk_friction
 	
+	bcam.set_follow_target_offset(Vector3(bcam_offset_blend, 0, 0).rotated(Vector3.UP, h_rot).normalized())
+	
 	move_and_slide()
 	
 
+
+func jump():
+	gravity_vec.y = gravity_vec.y + 5
+	velocity = move_vec + gravity_vec
+	move_and_slide()
+	
 
 func _on_sprint_timer_timeout():
 	if input_vector == Vector2.ZERO:
@@ -190,3 +232,14 @@ func _on_area_3d_area_exited(area):
 func _on_area_3d_area_entered(area):
 	if area.get_parent() == target:
 		target = area.get_parent()
+
+
+func _on_animation_tree_animation_finished(anim_name):
+	if anim_name == "JumpStart":
+		jump()
+	if anim_name == "Landing":
+		anim.set("parameters/GroundTransition/transition_request", "ground")
+
+func _on_animation_tree_animation_started(anim_name):
+	pass
+	

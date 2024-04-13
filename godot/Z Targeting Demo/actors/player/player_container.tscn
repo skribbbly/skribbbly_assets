@@ -1,10 +1,17 @@
-[gd_scene load_steps=9 format=3 uid="uid://bnx6442a86fjx"]
+[gd_scene load_steps=20 format=3 uid="uid://bnx6442a86fjx"]
 
 [ext_resource type="PackedScene" uid="uid://bdyqboxekyt0i" path="res://actors/player/player.tscn" id="1_hysp8"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3D.gd" id="2_bgv3f"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="3_muxmh"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/camera_3D_resource.gd" id="4_w5uan"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="5_ln6x2"]
+[ext_resource type="Animation" uid="uid://b6hefwac8nmw2" path="res://assets/tutorbot/tutorbot_anims/air_fall.res" id="6_w0xku"]
+[ext_resource type="Animation" uid="uid://p4wdlems5cgu" path="res://assets/tutorbot/tutorbot_anims/air_rise.res" id="7_545vw"]
+[ext_resource type="Animation" uid="uid://ua2608gpepqd" path="res://assets/tutorbot/tutorbot_anims/jump.res" id="8_ice1g"]
+[ext_resource type="Animation" uid="uid://cb3y8d66dir85" path="res://assets/tutorbot/tutorbot_anims/landing.res" id="9_y3oxw"]
+[ext_resource type="Animation" uid="uid://cqlbb4ekp712f" path="res://assets/tutorbot/tutorbot_anims/run.res" id="10_6qfxy"]
+[ext_resource type="Animation" uid="uid://dbj2cgspuw6ld" path="res://assets/tutorbot/tutorbot_anims/idle.res" id="11_eshqo"]
+[ext_resource type="Animation" uid="uid://bq1t28u1kenym" path="res://assets/tutorbot/tutorbot_anims/walk.res" id="12_itgvp"]
 
 [sub_resource type="Resource" id="Resource_xb5ev"]
 script = ExtResource("3_muxmh")
@@ -25,9 +32,237 @@ duration = 0.2
 transition = 0
 ease = 2
 
-[node name="PlayerContainer" type="Node3D"]
+[sub_resource type="Resource" id="Resource_filbf"]
+script = ExtResource("4_w5uan")
+cull_mask = 1048575
+h_offset = 0.0
+v_offset = 0.0
+fov = 75.0
 
-[node name="TutorBot" parent="." instance=ExtResource("1_hysp8")]
+[sub_resource type="Animation" id="Animation_dxnm7"]
+resource_name = "RESET"
+length = 3.06667
+tracks/0/type = "rotation_3d"
+tracks/0/imported = true
+tracks/0/enabled = true
+tracks/0/path = NodePath("TutorBot/Skeleton3D:thigh.R")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, -0.0139272, 0.999903, 2.9223e-08, 7.54789e-08)
+tracks/1/type = "rotation_3d"
+tracks/1/imported = true
+tracks/1/enabled = true
+tracks/1/path = NodePath("TutorBot/Skeleton3D:shin.R")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 2.69524e-08, -4.3012e-08, -0.0087048, 0.999962)
+tracks/2/type = "position_3d"
+tracks/2/imported = true
+tracks/2/enabled = true
+tracks/2/path = NodePath("TutorBot/Skeleton3D:cog")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = PackedFloat32Array(0, 1, 0, 0.331227, 0)
+tracks/3/type = "rotation_3d"
+tracks/3/imported = true
+tracks/3/enabled = true
+tracks/3/path = NodePath("TutorBot/Skeleton3D:cog")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = PackedFloat32Array(0, 1, -3.55271e-15, -1.19209e-07, 4.23517e-22, 1)
+tracks/4/type = "position_3d"
+tracks/4/imported = true
+tracks/4/enabled = true
+tracks/4/path = NodePath("TutorBot/Skeleton3D:footIK.L")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = PackedFloat32Array(0, 1, -0.0589469, 0.0128033, -0.0248614)
+tracks/5/type = "rotation_3d"
+tracks/5/imported = true
+tracks/5/enabled = true
+tracks/5/path = NodePath("TutorBot/Skeleton3D:footIK.L")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = PackedFloat32Array(0, 1, -0.519345, -0.479877, 0.519344, 0.479877)
+tracks/6/type = "position_3d"
+tracks/6/imported = true
+tracks/6/enabled = true
+tracks/6/path = NodePath("TutorBot/Skeleton3D:handIK.L")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = PackedFloat32Array(0, 1, -0.21042, 0.288187, -0.0148384)
+tracks/7/type = "rotation_3d"
+tracks/7/imported = true
+tracks/7/enabled = true
+tracks/7/path = NodePath("TutorBot/Skeleton3D:handIK.L")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = PackedFloat32Array(0, 1, 0.00836309, -0.00135377, 0.987116, 0.159784)
+tracks/8/type = "position_3d"
+tracks/8/imported = true
+tracks/8/enabled = true
+tracks/8/path = NodePath("TutorBot/Skeleton3D:footIK.R")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = PackedFloat32Array(0, 1, 0.0589469, 0.0128033, -0.0248614)
+tracks/9/type = "rotation_3d"
+tracks/9/imported = true
+tracks/9/enabled = true
+tracks/9/path = NodePath("TutorBot/Skeleton3D:footIK.R")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = PackedFloat32Array(0, 1, -0.519344, 0.479876, -0.519344, 0.479877)
+tracks/10/type = "position_3d"
+tracks/10/imported = true
+tracks/10/enabled = true
+tracks/10/path = NodePath("TutorBot/Skeleton3D:handIK.R")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = PackedFloat32Array(0, 1, 0.21042, 0.288187, -0.0148383)
+tracks/11/type = "rotation_3d"
+tracks/11/imported = true
+tracks/11/enabled = true
+tracks/11/path = NodePath("TutorBot/Skeleton3D:handIK.R")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = PackedFloat32Array(0, 1, 0.00836332, 0.00135373, -0.987116, 0.159784)
+tracks/12/type = "position_3d"
+tracks/12/imported = true
+tracks/12/enabled = true
+tracks/12/path = NodePath("TutorBot/Skeleton3D:upper_arm.L")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = PackedFloat32Array(0, 1, -0.124582, 0.103741, -0.00504827)
+tracks/13/type = "rotation_3d"
+tracks/13/imported = true
+tracks/13/enabled = true
+tracks/13/path = NodePath("TutorBot/Skeleton3D:upper_arm.L")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = PackedFloat32Array(0, 1, 0.00836305, -0.00135372, 0.987116, 0.159784)
+tracks/14/type = "position_3d"
+tracks/14/imported = true
+tracks/14/enabled = true
+tracks/14/path = NodePath("TutorBot/Skeleton3D:upper_arm.R")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = PackedFloat32Array(0, 1, 0.124582, 0.103741, -0.00504828)
+tracks/15/type = "rotation_3d"
+tracks/15/imported = true
+tracks/15/enabled = true
+tracks/15/path = NodePath("TutorBot/Skeleton3D:upper_arm.R")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = PackedFloat32Array(0, 1, 0.00836304, 0.00135373, -0.987116, 0.159784)
+tracks/16/type = "rotation_3d"
+tracks/16/imported = true
+tracks/16/enabled = true
+tracks/16/path = NodePath("TutorBot/Skeleton3D:body")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = PackedFloat32Array(0, 1, -3.70865e-09, -8.26531e-09, -8.26531e-09, 1)
+tracks/17/type = "rotation_3d"
+tracks/17/imported = true
+tracks/17/enabled = true
+tracks/17/path = NodePath("TutorBot/Skeleton3D:forearm.L")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = PackedFloat32Array(0, 1, -0.036469, -1.85457e-07, 0.000617975, 0.999335)
+tracks/18/type = "rotation_3d"
+tracks/18/imported = true
+tracks/18/enabled = true
+tracks/18/path = NodePath("TutorBot/Skeleton3D:head")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = PackedFloat32Array(0, 1, -3.33067e-15, -4.8562e-17, -9.36739e-16, 1)
+tracks/19/type = "rotation_3d"
+tracks/19/imported = true
+tracks/19/enabled = true
+tracks/19/path = NodePath("TutorBot/Skeleton3D:forearm.R")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/keys = PackedFloat32Array(0, 1, -0.036469, 1.85428e-07, -0.000617945, 0.999335)
+tracks/20/type = "rotation_3d"
+tracks/20/imported = true
+tracks/20/enabled = true
+tracks/20/path = NodePath("TutorBot/Skeleton3D:hips")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/keys = PackedFloat32Array(0, 1, 0.707107, -5.0243e-15, -0.707107, 8.98414e-22)
+tracks/21/type = "rotation_3d"
+tracks/21/imported = true
+tracks/21/enabled = true
+tracks/21/path = NodePath("TutorBot/Skeleton3D:thigh.L")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
+tracks/21/keys = PackedFloat32Array(0, 1, -2.82736e-08, 4.39409e-08, 0.0139407, 0.999903)
+tracks/22/type = "rotation_3d"
+tracks/22/imported = true
+tracks/22/enabled = true
+tracks/22/path = NodePath("TutorBot/Skeleton3D:shin.L")
+tracks/22/interp = 1
+tracks/22/loop_wrap = true
+tracks/22/keys = PackedFloat32Array(0, 1, 2.56276e-08, 3.08819e-08, 0.00868819, 0.999962)
+tracks/23/type = "rotation_3d"
+tracks/23/imported = true
+tracks/23/enabled = true
+tracks/23/path = NodePath("TutorBot/Skeleton3D:foot.L")
+tracks/23/interp = 1
+tracks/23/loop_wrap = true
+tracks/23/keys = PackedFloat32Array(0, 1, 1.21891e-07, 3.19157e-09, -0.613646, 0.789581)
+tracks/24/type = "rotation_3d"
+tracks/24/imported = true
+tracks/24/enabled = true
+tracks/24/path = NodePath("TutorBot/Skeleton3D:foot.R")
+tracks/24/interp = 1
+tracks/24/loop_wrap = true
+tracks/24/keys = PackedFloat32Array(0, 1, 1.21891e-07, -3.19156e-09, 0.613646, 0.789581)
+tracks/25/type = "rotation_3d"
+tracks/25/imported = true
+tracks/25/enabled = true
+tracks/25/path = NodePath("TutorBot/Skeleton3D:toe.L")
+tracks/25/interp = 1
+tracks/25/loop_wrap = true
+tracks/25/keys = PackedFloat32Array(0, 1, 2.13639e-08, -4.23164e-09, -0.10767, 0.994187)
+tracks/26/type = "rotation_3d"
+tracks/26/imported = true
+tracks/26/enabled = true
+tracks/26/path = NodePath("TutorBot/Skeleton3D:toe.R")
+tracks/26/interp = 1
+tracks/26/loop_wrap = true
+tracks/26/keys = PackedFloat32Array(0, 1, 2.13639e-08, 4.23165e-09, 0.10767, 0.994187)
+tracks/27/type = "rotation_3d"
+tracks/27/imported = true
+tracks/27/enabled = true
+tracks/27/path = NodePath("TutorBot/Skeleton3D:toe_pivot.L")
+tracks/27/interp = 1
+tracks/27/loop_wrap = true
+tracks/27/keys = PackedFloat32Array(0, 1, 2.0146e-07, 5.71659e-08, -0.734464, 0.678648)
+tracks/28/type = "rotation_3d"
+tracks/28/imported = true
+tracks/28/enabled = true
+tracks/28/path = NodePath("TutorBot/Skeleton3D:toe_pivot.R")
+tracks/28/interp = 1
+tracks/28/loop_wrap = true
+tracks/28/keys = PackedFloat32Array(0, 1, 2.04604e-07, -5.37635e-08, 0.734464, 0.678648)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_n00dr"]
+_data = {
+"AirFall": ExtResource("6_w0xku"),
+"AirRise": ExtResource("7_545vw"),
+"JumpStart": ExtResource("8_ice1g"),
+"Landing": ExtResource("9_y3oxw"),
+"RESET": SubResource("Animation_dxnm7"),
+"Run": ExtResource("10_6qfxy"),
+"idle": ExtResource("11_eshqo"),
+"walk": ExtResource("12_itgvp")
+}
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lodst"]
+shading_mode = 0
+albedo_color = Color(0.0862745, 0.0705882, 0.0980392, 1)
+
+[node name="PlayerContainer" type="Node3D"]
 
 [node name="FreeCam" type="Node3D" parent="."]
 unique_name_in_owner = true
@@ -52,7 +287,7 @@ camera_3D_resource = SubResource("Resource_c6j7b")
 
 [node name="BattleCam" type="Node3D" parent="."]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.08228, 2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1.08228, 2)
 script = ExtResource("2_bgv3f")
 priority_override = false
 priority = 2
@@ -62,7 +297,7 @@ follow_parameters/spring_arm/spring_length = 2.0
 follow_parameters/spring_arm/collision_mask = 1
 follow_parameters/spring_arm/shape = null
 follow_parameters/spring_arm/margin = 0.01
-follow_parameters/target_offset = Vector3(0, 0.4, 0)
+follow_parameters/target_offset = Vector3(1, 0.4, 0)
 follow_parameters/damping = true
 follow_parameters/damping_value = 10.0
 look_at_mode = 3
@@ -71,13 +306,43 @@ look_at_parameters/look_at_target_offset = Vector3(0, 0, 0)
 tween_parameters = SubResource("Resource_agk2m")
 tween_on_load = false
 inactive_update_mode = 0
-camera_3D_resource = null
+camera_3D_resource = SubResource("Resource_filbf")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.08228, 2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1.08228, 2)
 
 [node name="PhantomCameraHost" type="Node" parent="Camera3D"]
 script = ExtResource("5_ln6x2")
+
+[node name="TutorBot" parent="." instance=ExtResource("1_hysp8")]
+
+[node name="AnimationTree" parent="TutorBot" index="0"]
+libraries = {
+"": SubResource("AnimationLibrary_n00dr")
+}
+
+[node name="Skeleton3D" parent="TutorBot/Mesh/tutorbot/TutorBot" index="0"]
+bones/3/rotation = Quaternion(0.00836305, -0.00135372, 0.987116, 0.159784)
+bones/4/rotation = Quaternion(-0.036469, -1.85459e-07, 0.000617974, 0.999335)
+bones/6/rotation = Quaternion(-0.00836304, -0.00135373, 0.987116, -0.159784)
+bones/7/rotation = Quaternion(-0.036469, 1.85431e-07, -0.000617945, 0.999335)
+bones/8/rotation = Quaternion(0.707107, -5.0243e-15, -0.707107, 7.48679e-22)
+bones/11/rotation = Quaternion(1.21891e-07, 3.19157e-09, -0.613646, 0.789581)
+bones/13/rotation = Quaternion(-0.0139272, 0.999903, 2.9223e-08, 7.54789e-08)
+bones/14/rotation = Quaternion(2.69524e-08, -4.3012e-08, -0.0087048, 0.999962)
+bones/15/rotation = Quaternion(1.21891e-07, -3.19156e-09, 0.613646, 0.789581)
+bones/17/rotation = Quaternion(0.519345, 0.479877, -0.519344, -0.479876)
+bones/18/rotation = Quaternion(2.0146e-07, 5.71659e-08, -0.734464, 0.678648)
+bones/21/rotation = Quaternion(0.519344, -0.479876, 0.519344, -0.479877)
+bones/22/rotation = Quaternion(2.04604e-07, -5.37635e-08, 0.734464, 0.678648)
+bones/24/rotation = Quaternion(-0.00836332, -0.00135373, 0.987116, -0.159784)
+
+[node name="TutorBotMesh" parent="TutorBot/Mesh/tutorbot/TutorBot/Skeleton3D" index="0"]
+surface_material_override/3 = null
+surface_material_override/4 = SubResource("StandardMaterial3D_lodst")
+
+[node name="BoneAttachment3D" parent="TutorBot/Mesh/tutorbot/TutorBot/Skeleton3D" index="1"]
+transform = Transform3D(1, 1.65306e-08, -1.65312e-08, -1.65306e-08, 1, 6.70219e-08, 1.65312e-08, -6.70219e-08, 1, 2.98595e-09, 0.623276, -3.84899e-08)
 
 [editable path="TutorBot"]
 [editable path="TutorBot/Mesh/tutorbot"]

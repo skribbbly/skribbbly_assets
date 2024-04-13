@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://crwna4bikc6n"]
+
+[ext_resource type="Texture2D" uid="uid://dg8rt0ux8mvmc" path="res://assets/retical/retical.png" id="1_ru6bo"]
+
+[node name="Retical" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.1, 0.1)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -260.0
+offset_top = -890.0
+offset_right = 252.0
+offset_bottom = -378.0
+texture = ExtResource("1_ru6bo")

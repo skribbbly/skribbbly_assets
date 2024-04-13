@@ -50,7 +50,6 @@ priority = 5
 follow_mode = 0
 look_at_mode = 3
 look_at_group = Array[NodePath]([NodePath("../PlayerCharacterBody3D2"), NodePath("../../NPCs/PlayerMeshInstance3D"), NodePath("../../NPCs/PlayerMeshInstance3D2")])
-look_at_parameters/look_at_target_offset = Vector3(0, 0, 0)
 tween_parameters = null
 tween_on_load = false
 inactive_update_mode = 0

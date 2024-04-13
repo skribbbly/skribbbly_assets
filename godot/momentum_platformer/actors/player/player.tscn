@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://b1aosja6og72q"]
+
+[ext_resource type="Script" path="res://actors/player/player.gd" id="1_po4io"]
+[ext_resource type="Script" path="res://actors/player/Head.gd" id="2_nq7b7"]
+[ext_resource type="PackedScene" uid="uid://d4iy7rdf26m5e" path="res://assets/character/sonic/sonic.glb" id="2_qxusp"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4k2yb"]
+radius = 0.200808
+height = 1.06501
+
+[node name="Player" type="CharacterBody3D"]
+collision_layer = 256
+wall_min_slide_angle = 3.14159
+floor_constant_speed = true
+floor_max_angle = 3.14159
+script = ExtResource("1_po4io")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.534282, 0)
+shape = SubResource("CapsuleShape3D_4k2yb")
+
+[node name="Mesh" type="Node3D" parent="."]
+
+[node name="sonic" parent="Mesh" instance=ExtResource("2_qxusp")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.859299, 0)
+script = ExtResource("2_nq7b7")
+
+[node name="SpringArm3D" type="SpringArm3D" parent="Head"]
+spring_length = 2.5
+
+[node name="Camera3D" type="Camera3D" parent="Head/SpringArm3D"]

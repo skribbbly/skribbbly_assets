@@ -1,0 +1,92 @@
+[gd_scene load_steps=9 format=3 uid="uid://bnx6442a86fjx"]
+
+[ext_resource type="PackedScene" uid="uid://bdyqboxekyt0i" path="res://actors/player/player.tscn" id="1_hysp8"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3D.gd" id="2_bgv3f"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="3_muxmh"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/camera_3D_resource.gd" id="4_w5uan"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="5_ln6x2"]
+
+[sub_resource type="Resource" id="Resource_xb5ev"]
+script = ExtResource("3_muxmh")
+duration = 0.5
+transition = 0
+ease = 2
+
+[sub_resource type="Resource" id="Resource_c6j7b"]
+script = ExtResource("4_w5uan")
+cull_mask = 1048575
+h_offset = 0.0
+v_offset = 0.0
+fov = 75.0
+
+[sub_resource type="Resource" id="Resource_agk2m"]
+script = ExtResource("3_muxmh")
+duration = 0.2
+transition = 0
+ease = 2
+
+[node name="PlayerContainer" type="Node3D"]
+
+[node name="TutorBot" parent="." instance=ExtResource("1_hysp8")]
+
+[node name="AnimationTree" parent="TutorBot" index="0"]
+parameters/AirVelocityBlend/blend_position = 1.10526
+"parameters/TimeScale 3/scale" = 1.0
+
+[node name="TutorBotMesh" parent="TutorBot/Mesh/tutorbot/TutorBot/Skeleton3D" index="0"]
+surface_material_override/3 = null
+
+[node name="FreeCam" type="Node3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.682278, 1.7)
+script = ExtResource("2_bgv3f")
+priority_override = false
+priority = 1
+follow_mode = 6
+follow_target = NodePath("../TutorBot/Head")
+follow_parameters/spring_arm/spring_length = 1.7
+follow_parameters/spring_arm/collision_mask = 1
+follow_parameters/spring_arm/shape = null
+follow_parameters/spring_arm/margin = 0.01
+follow_parameters/target_offset = Vector3(0, 0, 0)
+follow_parameters/damping = true
+follow_parameters/damping_value = 10.0
+look_at_mode = 0
+tween_parameters = SubResource("Resource_xb5ev")
+tween_on_load = false
+inactive_update_mode = 0
+camera_3D_resource = SubResource("Resource_c6j7b")
+
+[node name="BattleCam" type="Node3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.08228, 2)
+script = ExtResource("2_bgv3f")
+priority_override = false
+priority = 2
+follow_mode = 6
+follow_target = NodePath("../TutorBot/Head")
+follow_parameters/spring_arm/spring_length = 2.0
+follow_parameters/spring_arm/collision_mask = 1
+follow_parameters/spring_arm/shape = null
+follow_parameters/spring_arm/margin = 0.01
+follow_parameters/target_offset = Vector3(0, 0.4, 0)
+follow_parameters/damping = true
+follow_parameters/damping_value = 10.0
+look_at_mode = 3
+look_at_group = Array[NodePath]([])
+look_at_parameters/look_at_target_offset = Vector3(0, 0, 0)
+tween_parameters = SubResource("Resource_agk2m")
+tween_on_load = false
+inactive_update_mode = 0
+camera_3D_resource = null
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.08228, 2)
+
+[node name="PhantomCameraHost" type="Node" parent="Camera3D"]
+script = ExtResource("5_ln6x2")
+
+[connection signal="animation_started" from="TutorBot/AnimationTree" to="TutorBot" method="_on_animation_tree_animation_started"]
+
+[editable path="TutorBot"]
+[editable path="TutorBot/Mesh/tutorbot"]
